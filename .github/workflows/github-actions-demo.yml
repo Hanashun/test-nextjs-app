@@ -27,6 +27,9 @@ jobs:
         run: echo "$SSH_PRIVATE_KEY" > catalysphere.key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Check the SSH key file
+        run: ls -la
 
       - name: Check file permissions of SSH key
         run: ls -l catalysphere.key
