@@ -46,17 +46,3 @@ jobs:
           ./.next/* \
           catalysphere@sv14319.xserver.jp:/home/catalysphere/catalysphere.com/public_html/app-demo001/ \
           --exclude .htaccess
-
-
-
-
-        #FTP Deploy
-      #- name: FTP Deploy
-       # uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        #with:
-         # server: sv14319.xserver.jp
-          #username: catalysphere
-          #password: {{ secrets.FTP_PASSWORD }} //add # before {{ secrets.FTP_PASSWORD }}}
-          #protocol: ftps
-          #port: 21
-          #server-dir: catalyshpere.com/public_html/app-demo001/
