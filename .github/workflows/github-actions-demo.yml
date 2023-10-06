@@ -16,8 +16,8 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Install NPM packages
-      - run: npm ci
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Build
         run: npm run build
@@ -28,9 +28,9 @@ jobs:
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         env:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           server-dir: catalyshpere.xserv.jp/public_html/app-demo001.catalysphere.com
           local-dir: ./
           args: --delete
