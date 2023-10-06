@@ -23,10 +23,14 @@ jobs:
         run: npm run build
 
         #SSH Deploy
-      - name: ssh key generate
-        run: echo "$SSH_PRIVATE_KEY" > key && chmod 600 key
+      - name: Generate SSH key
+        run: echo "$SSH_PRIVATE_KEY" > catalysphere.key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Set permission for SSH Key
+        run: chmod 600 catalysphere.key
+
       - name: Deploy with rsync
         run: |
           rsync -auzrv \
