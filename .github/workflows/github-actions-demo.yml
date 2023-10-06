@@ -24,10 +24,10 @@ jobs:
 
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
-        env:
+        with:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           server-dir: catalyshpere.xserv.jp/public_html/app-demo001.catalysphere.com
-          local-dir: ./
+          local-dir: ./out/
           args: --delete
