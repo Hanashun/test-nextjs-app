@@ -22,12 +22,27 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: sv14319.xserver.jp
-          username: catalysphere
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          server-dir: catalyshpere.com/public_html/app-demo001/
+        #SSH Deploy
+      - name: ssh key generate
+        run: echo "$SSH_PRIVATE_KEY" > key && chmod 600 key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      - name: rsync deploy
+        run: rsync -auzrv \
+         -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" \
+         --delete \
+         ./.next/* \
+         catalysphere@${{secrets.FTP_SERVER}}:/home/catalysphere/catalysphere.com/public_html/app-demo001/ \
+         --exclude .htaccess
+
+        #FTP Deploy
+      #- name: FTP Deploy
+       # uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        #with:
+         # server: sv14319.xserver.jp
+          #username: catalysphere
+          #password: {{ secrets.FTP_PASSWORD }} //add # before {{ secrets.FTP_PASSWORD }}}
+          #protocol: ftps
+          #port: 21
+          #server-dir: catalyshpere.com/public_html/app-demo001/
