@@ -40,7 +40,7 @@ jobs:
 
       - name: Deploy with rsync
         run: |
-          rsync -auzrv \
+          rsync -auvz \
           -e "ssh -i catalysphere.key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" \
           --delete \
           ./.next/* \
