@@ -2,20 +2,35 @@ name: deploy to remorte
 
 on:
   push:
-    branches:
-      - master
+    branches: [ develop ]
 
 jobs:
-  Explore-GitHub-Actions:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: gulp build
-        uses: actions/setup-node@v1
-      - run: npm install && npm run build
-      - name: ssh key generate
-        run: echo "$SSH_PRIVATE_KEY" > key && chmod 600 key  
+      - name: checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+
+      - name: Install NPM packages
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Export Next.js App
+        run: npm run export
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: rsync deploy
-        run: rsync -auzrv -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./dist/* catalysphere@sv14319.xserver.jp:/home/catalysphere.com/public_html/app-demo001.catalysphere.com
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: catalyshpere.xserv.jp/public_html/app-demo001.catalysphere.com
+          local-dir: ./
+          args: --delete
