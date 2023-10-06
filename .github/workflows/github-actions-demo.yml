@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -34,7 +34,7 @@ jobs:
       - name: Add SSH key to the ssh-agent
         run: |
           eval $(ssh-agent -s)
-          echo "{{ secrets.SSH_PASSWORD }}" | ssh-add catalysphere.key
+          ssh-add catalysphere.key
 
       - name: Deploy with rsync
         run: |
@@ -44,6 +44,7 @@ jobs:
           ./.next/* \
           catalysphere@sv14319.xserver.jp:/home/catalysphere/catalysphere.com/public_html/app-demo001/ \
           --exclude .htaccess
+
 
 
         #FTP Deploy
