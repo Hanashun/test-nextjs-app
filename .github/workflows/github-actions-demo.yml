@@ -28,6 +28,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
           port: ${{ secrets.FTP_PORT }}
           server-dir: catalyshpere.xserv.jp/public_html/app-demo001.catalysphere.com/
           local-dir: ./
