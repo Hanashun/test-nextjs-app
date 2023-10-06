@@ -28,17 +28,8 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       
-      - name: Check the SSH key file
-        run: ls -la
-
-      - name: Check file permissions of SSH key
-        run: ls -l catalysphere.key
-
       - name: Set permission for SSH Key
         run: chmod 600 catalysphere.key
-
-      - name: Check file permissions of SSH key
-        run: ls -l catalysphere.key
       
       - name: Add SSH key to the ssh-agent
         run: |
@@ -48,4 +39,4 @@ jobs:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
 
       - name: Deploy with rsync
-        run: rsync -auvz -e "ssh -i catalysphere.key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./.next/* catalysphere@sv14319.xserver.jp:~/catalysphere.com/public_html/app-demo001/ --exclude .htaccess
+        run: rsync -auvz -e "ssh -i catalysphere.key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./.next/* catalysphere@sv14319.xserver.jp:/home/catalysphere/catalysphere.com/public_html/app-demo001/ --exclude .htaccess
