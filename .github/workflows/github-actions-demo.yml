@@ -1,4 +1,4 @@
-name: deploy to remorte
+name: deploy to remote server
 
 on:
   push:
@@ -25,9 +25,9 @@ jobs:
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
           server-dir: catalyshpere.xserv.jp/public_html/app-demo001.catalysphere.com
           local-dir: ./out/
-          args: --delete
