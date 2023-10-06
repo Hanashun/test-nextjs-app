@@ -23,11 +23,11 @@ jobs:
         run: npm run build
 
       - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: sv14319.xserver.jp
           username: catalysphere
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          port: 10021
+          port: 21
           server-dir: catalyshpere.com/public_html/app-demo001/
