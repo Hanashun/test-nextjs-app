@@ -48,4 +48,4 @@ jobs:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
 
       - name: Deploy with rsync
-        run: rsync -auvz -e "ssh -i catalysphere.key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./.next/* catalysphere@sv14319.xserver.jp:/home/catalysphere/catalysphere.com/public_html/app-demo001/ --exclude .htaccess
+        run: rsync -auvz -e "ssh -i catalysphere.key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./.next/* catalysphere@sv14319.xserver.jp:~/catalysphere.com/public_html/app-demo001/ --exclude .htaccess
