@@ -28,13 +28,14 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
-      - name: rsync deploy
-        run: rsync -auzrv \
-         -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" \
-         --delete \
-         ./.next/* \
-         catalysphere@${{secrets.FTP_SERVER}}:/home/catalysphere/catalysphere.com/public_html/app-demo001/ \
-         --exclude .htaccess
+      - name: Deploy with rsync
+        run: |
+          rsync -auzrv \
+          -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" \
+          --delete \
+          ./.next/* \
+          catalysphere@${{secrets.FTP_SERVER}}:/home/catalysphere/catalysphere.com/public_html/app-demo001/ \
+          --exclude .htaccess
 
         #FTP Deploy
       #- name: FTP Deploy
