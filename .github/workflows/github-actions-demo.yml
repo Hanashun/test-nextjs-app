@@ -30,7 +30,13 @@ jobs:
       
       - name: Set permission for SSH Key
         run: chmod 600 key
-      
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ssh-key
+          path: key
+
       - name: Add SSH key to the ssh-agent
         run: |
           eval $(ssh-agent -s)
