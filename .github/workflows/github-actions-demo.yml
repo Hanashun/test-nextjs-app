@@ -30,16 +30,12 @@ jobs:
       
       - name: Set permission for SSH Key
         run: chmod 600 key
-
+      
       - name: Add SSH key to the ssh-agent
-        run: |
-          eval $(ssh-agent -s)
-          echo ${{ secrets.SSH_PASSPHRASE }} | ssh-add key
-        env:
-          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+        run: eval $(ssh-agent -s) && ssh-add key
 
       - name: Test SSH connection
         run: ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022 catalysphere@sv14319.xserver.jp echo "SSH connection successful"
 
       - name: Deploy with rsync
-        run: rsync -auvz -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022 -vvv" --delete ./.next/* catalysphere@sv14319.xserver.jp:/home/catalysphere/catalysphere.com/public_html/app-demo001/ --exclude .htaccess
+        run: rsync -auvz -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 10022" --delete ./.next/* catalysphere@sv14319.xserver.jp:/home/catalysphere/catalysphere.com/public_html/app-demo001/ --exclude .htaccess
